@@ -18,6 +18,13 @@ namespace SalesWebMvc.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+            ViewData["email"] = "nich@gmail.com";
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

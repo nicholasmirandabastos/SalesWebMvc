@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\Departments.cshtml" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\css\bootstrap-sandstone.css" />
   </ItemGroup>
 
   <ItemGroup>

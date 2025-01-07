@@ -4,6 +4,13 @@ namespace SalesWebMvc.Models
 {
     public class Seller
     {
+        private int v1;
+        private string v2;
+        private string v3;
+        private DateTime dateTime;
+        private double v4;
+        private int v5;
+
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
@@ -23,7 +30,7 @@ namespace SalesWebMvc.Models
             Email = email;
             BirthDate = birthDate;
             BaseSalary = baseSalary;
-            Department = department;
+            Department = department; // Aqui o departamento é associado corretamente.
         }
 
         public void AddSales(SalesRecord sr)

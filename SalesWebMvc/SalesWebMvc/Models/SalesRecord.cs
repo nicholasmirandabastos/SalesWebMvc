@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using SalesWebMvc.Models.Enums;
+﻿using SalesWebMvc.Models.Enums;
 
 namespace SalesWebMvc.Models
 {
@@ -9,11 +8,9 @@ namespace SalesWebMvc.Models
         public DateTime Date { get; set; }
         public double Amount { get; set; }
         public SaleStatus Status { get; set; }
-        public Seller Seller { get; set; }
+        public Seller Seller { get; set; } // Associação com o vendedor
 
-        public SalesRecord ()
-        {
-        }
+        public SalesRecord() { }
 
         public SalesRecord(int id, DateTime date, double amount, SaleStatus status, Seller seller)
         {

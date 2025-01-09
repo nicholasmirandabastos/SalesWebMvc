@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
 using Microsoft.EntityFrameworkCore;
+using SalesWebMvc.Services;
 
 public class Startup
 {
@@ -23,9 +24,11 @@ public class Startup
 
         // Adicionando o SeedingService ao contêiner de DI
         services.AddScoped<SeedingService>();
+        services.AddScoped<SellerService>();
 
         // Adicionar os serviços de controladores com views
         services.AddControllersWithViews();
+
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)

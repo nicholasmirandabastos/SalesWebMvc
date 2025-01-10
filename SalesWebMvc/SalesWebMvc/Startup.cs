@@ -25,6 +25,7 @@ public class Startup
         // Adicionando o SeedingService ao contêiner de DI
         services.AddScoped<SeedingService>();
         services.AddScoped<SellerService>();
+        services.AddScoped<DepartmentService>();
 
         // Adicionar os serviços de controladores com views
         services.AddControllersWithViews();

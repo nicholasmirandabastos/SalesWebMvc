@@ -6,19 +6,18 @@
         public string Name { get; set; }
         public ICollection<Seller> Sellers { get; set; } = new List<Seller>();
 
-        public Department() 
-        { 
-        }
-
-        public Department(int id, string name)
+        public Department()
         {
-            ID = id;
-            Name = name;
+        }
+
+        public Department(string name)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null");
         }
 
 
-        public void AddSeller(Seller seller) 
-        { 
+        public void AddSeller(Seller seller)
+        {
             Sellers.Add(seller);
         }
 

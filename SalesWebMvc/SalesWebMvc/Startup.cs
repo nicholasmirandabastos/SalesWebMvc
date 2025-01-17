@@ -28,6 +28,7 @@ public class Startup
         services.AddScoped<SeedingService>();
         services.AddScoped<SellerService>();
         services.AddScoped<DepartmentService>();
+        services.AddScoped <SalesRecordService>();
 
         // Adicionar os serviços de controladores com views
         services.AddControllersWithViews();
@@ -36,6 +37,8 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
     {
+        Console.WriteLine($"Environment: {env.EnvironmentName}"); // Mostra o ambiente no console
+
         var enUS = new CultureInfo("en-US");
         var localizationOptions = new RequestLocalizationOptions
         {
@@ -49,6 +52,7 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
+            seedingService.Seed(); // Chama o método Seed para popular os dados
         }
         else
         {

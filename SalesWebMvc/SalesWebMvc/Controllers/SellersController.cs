@@ -30,7 +30,7 @@ namespace SalesWebMvc.Controllers
             var departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel
             {
-                Seller = new Seller(), // Inicialize o objeto Seller para evitar problemas na View
+                Seller = new Seller(),
                 Departments = departments
             };
             return View(viewModel);

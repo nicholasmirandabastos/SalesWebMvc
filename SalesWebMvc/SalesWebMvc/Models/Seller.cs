@@ -50,7 +50,7 @@ namespace SalesWebMvc.Models
             Email = email;
             BirthDate = birthDate;
             BaseSalary = baseSalary;
-            Department = department; // Aqui o departamento é associado corretamente.
+            Department = department; 
         }
 
         public void AddSales(SalesRecord sr)

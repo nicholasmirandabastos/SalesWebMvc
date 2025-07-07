@@ -43,9 +43,8 @@ namespace SalesWebMvc.Controllers
             {
                 var departments = await _departmentService.FindAllAsync();
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
-                return View(viewModel);
+                await _sellerService.InsertAsync(seller);
             }
-            await _sellerService.InsertAsync(seller);
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Delete(int? id)
@@ -117,7 +116,6 @@ namespace SalesWebMvc.Controllers
             {
                 var departments = await _departmentService.FindAllAsync();
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
-                return View(viewModel);
             }
             if (id != seller.Id)
             {

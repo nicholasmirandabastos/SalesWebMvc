@@ -1,0 +1,31 @@
+﻿@using SalesWebMvc.Models.Enums
+
+@{
+    ViewData["Title"] = "Profile Change";
+    var currentProfile = (UserProfile)(ViewData["CurrentProfile"] ?? UserProfile.None);
+}
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-info">
+        @ViewData["Message"]
+    </div>
+}
+
+
+<h2>@ViewData["Title"]</h2>
+
+<p>Perfil atual: <strong>@currentProfile</strong></p>
+
+<form asp-action="Set" method="post">
+    <div class="form-group">
+        <label for="profile">Selecione o novo perfil:</label>
+        <select name="profile" class="form-control" required>
+            <option value="">-- Selecione --</option>
+            <option value="1" selected="@(currentProfile == UserProfile.Visualizador ? "selected" : "")">Visualizador</option>
+            <option value="2" selected="@(currentProfile == UserProfile.Administrador ? "selected" : "")">Administrador</option>
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Trocar Perfil</button>
+</form>

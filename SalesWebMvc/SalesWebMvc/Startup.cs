@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 using SalesWebMvc.Data;
+using SalesWebMvc.Filters;
 using SalesWebMvc.Models;
-using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Services;
+using System.Globalization;
 
 public class Startup
 {
@@ -28,10 +29,23 @@ public class Startup
         services.AddScoped<SeedingService>();
         services.AddScoped<SellerService>();
         services.AddScoped<DepartmentService>();
-        services.AddScoped <SalesRecordService>();
+        services.AddScoped<SalesRecordService>();
+
+        services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(30); // tempo de expiração
+            options.Cookie.HttpOnly = true;
+            options.Cookie.IsEssential = true;
+        });
 
         // Adicionar os serviços de controladores com views
-        services.AddControllersWithViews();
+        services.AddScoped<ProfileRequiredFilter>();
+
+        services.AddControllersWithViews(options =>
+        {
+            options.Filters.Add<ProfileRequiredFilter>();
+        });
+
 
     }
 
@@ -64,6 +78,7 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
+        app.UseSession();
         app.UseAuthorization();
 
         // Usando UseEndpoints em vez de MapControllerRoute

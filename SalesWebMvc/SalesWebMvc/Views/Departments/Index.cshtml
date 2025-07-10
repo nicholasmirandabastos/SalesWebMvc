@@ -1,14 +1,21 @@
 ﻿@model IEnumerable<SalesWebMvc.Models.Department>
+@using SalesWebMvc.Models.Enums
 
 @{
     ViewData["Title"] = "Index";
+    var perfil = (UserProfile)(Context.Session.GetInt32("UserProfile") ?? 0);
 }
+
 
 <h1>Departments</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (perfil == UserProfile.Administrador)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -19,17 +26,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (perfil == UserProfile.Administrador)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                    |
+                    @if (perfil == UserProfile.Administrador)
+                    {
+
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.Enums;
+using Microsoft.AspNetCore.Http;
+
+
 
 namespace SalesWebMvc.Controllers
 {
@@ -17,6 +21,13 @@ namespace SalesWebMvc.Controllers
         {
             _context = context;
         }
+
+        private bool IsAdmin()
+        {
+            var perfil = HttpContext.Session.GetInt32("UserProfile") ?? 0;
+            return perfil == (int)UserProfile.Administrador;
+        }
+
 
         // GET: Departments
         public async Task<IActionResult> Index()
@@ -45,8 +56,13 @@ namespace SalesWebMvc.Controllers
         // GET: Departments/Create
         public IActionResult Create()
         {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Select", "Profile");
+            }
             return View();
         }
+
 
         // POST: Departments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -55,6 +71,11 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name")] Department department)
         {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Select", "Profile");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(department);
@@ -67,6 +88,11 @@ namespace SalesWebMvc.Controllers
         // GET: Departments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Select", "Profile");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -80,6 +106,7 @@ namespace SalesWebMvc.Controllers
             return View(department);
         }
 
+
         // POST: Departments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -87,6 +114,11 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name")] Department department)
         {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Select", "Profile");
+            }
+
             if (id != department.ID)
             {
                 return NotFound();
@@ -115,9 +147,15 @@ namespace SalesWebMvc.Controllers
             return View(department);
         }
 
+
         // GET: Departments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Select", "Profile");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -133,11 +171,17 @@ namespace SalesWebMvc.Controllers
             return View(department);
         }
 
+
         // POST: Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!IsAdmin())
+            {
+                return RedirectToAction("Select", "Profile");
+            }
+
             var department = await _context.Department.FindAsync(id);
             if (department != null)
             {
@@ -147,6 +191,7 @@ namespace SalesWebMvc.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool DepartmentExists(int id)
         {

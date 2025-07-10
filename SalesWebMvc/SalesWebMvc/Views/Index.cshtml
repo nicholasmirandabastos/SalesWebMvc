@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Selecionar Perfil";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Set" method="post">
+    <div class="form-group">
+        <label for="profile">Escolha seu perfil:</label>
+        <select name="profile" class="form-control" required>
+            <option value="">-- Selecione --</option>
+            <option value="1">Visualizador</option>
+            <option value="2">Administrador</option>
+        </select>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
